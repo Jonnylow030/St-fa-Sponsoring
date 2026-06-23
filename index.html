@@ -186,6 +186,7 @@
   }
   .rune-meaning{ font-size:13px; font-weight:300; color:var(--muted); line-height:1.4; }
   .rune-meaning b{ color:var(--yellow); font-weight:800; }
+  .fahrplan-title{ font-size:clamp(24px,3.6vw,42px); white-space:nowrap; }
   .wave{ position:absolute; bottom:0; left:0; width:100%; opacity:.5; }
 
   /* ── Agenda ── */
@@ -305,13 +306,40 @@
     .road-bar{ display:none; }
     .dot-nav{ display:none; }
     .agenda-row .sub{ display:none; }
-    .slide{ padding:88px 22px 28px; align-items:flex-start; }
+    .slide{ padding:96px 20px 84px; align-items:flex-start; }
     h1.title{ margin-bottom:12px; }
-    .lead{ margin-bottom:20px; }
+    .lead{ margin-bottom:20px; max-width:100% !important; }
     ul.shield-list{ gap:11px; }
     ul.shield-list li{ font-size:13.5px; }
     .panel-label{ margin-bottom:11px; padding-bottom:7px; }
     .agenda-row{ padding:12px 0; }
+    .agenda-row .txt{ font-size:15px; }
+
+    /* fixed header / footer chrome */
+    .brand-fixed{
+      top:16px; left:16px; right:88px;
+      font-size:9px; letter-spacing:1px; line-height:1.4;
+      white-space:normal; max-width:none;
+    }
+    .brand-logo-fixed{ top:12px; right:14px; }
+    .brand-logo-fixed img{ height:34px; }
+    .nav-ctrl{ bottom:14px; right:14px; gap:10px; }
+    .nav-ctrl button{ width:36px; height:36px; }
+    .progress{ z-index:21; }
+
+    /* title slide */
+    .mega-title{ line-height:1.05; }
+    .rune-row{ margin-top:18px; }
+    .rune-items{ gap:20px; }
+    .rune{ font-size:26px; }
+    .rune-meaning{ font-size:12px; }
+    .rune-caption{ font-size:10px; }
+
+    /* agenda slide title */
+    .fahrplan-title{ font-size:clamp(22px,7vw,30px); white-space:normal; }
+
+    /* tier cards */
+    .tier-card{ padding:18px 16px; }
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -364,7 +392,7 @@
       <div class="agenda-layout">
         <div class="agenda-main">
           <div class="eyebrow">Überblick</div>
-          <h1 class="title" style="font-size:clamp(24px,3.6vw,42px); white-space:nowrap;">Der Fahrplan zu neuen <em>Ufern.</em></h1>
+          <h1 class="title fahrplan-title">Der Fahrplan zu neuen <em>Ufern.</em></h1>
           <div class="agenda-list">
             <div class="agenda-row" data-jump="2"><span class="idx">01</span><span class="txt">Markenkern &amp; Geschichte</span><span class="sub">Warum Sponsoren zuhören</span></div>
             <div class="agenda-row" data-jump="3"><span class="idx">02</span><span class="txt">Das Sponsoring-Stufenmodell</span><span class="sub">Crew · Steuermann · Jarl · Allianz</span></div>
