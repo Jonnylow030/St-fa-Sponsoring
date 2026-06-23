@@ -188,6 +188,7 @@
   .rune-meaning b{ color:var(--yellow); font-weight:800; }
   .fahrplan-title{ font-size:clamp(24px,3.6vw,42px); white-space:nowrap; }
   .wave{ position:absolute; bottom:0; left:0; width:100%; opacity:.5; }
+  .title-image-mobile{ display:none; }
 
   /* ── Agenda ── */
   .agenda-layout{ display:flex; align-items:center; gap:40px; }
@@ -285,13 +286,6 @@
   }
   .dot-nav button.active{ background:var(--yellow); transform:scale(1.5); }
 
-  .brand-fixed{
-    position:fixed; top:24px; left:clamp(20px,5vw,64px); z-index:20;
-    font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted2);
-    display:flex; align-items:center; gap:8px;
-  }
-  .brand-fixed .shield{ width:13px; height:15px; }
-  .brand-fixed .shield path{ stroke:var(--muted2); }
   .brand-logo-fixed{
     position:fixed; top:20px; right:clamp(18px,4vw,52px); z-index:20;
     transition:opacity .25s;
@@ -316,11 +310,6 @@
     .agenda-row .txt{ font-size:15px; }
 
     /* fixed header / footer chrome */
-    .brand-fixed{
-      top:16px; left:16px; right:88px;
-      font-size:9px; letter-spacing:1px; line-height:1.4;
-      white-space:normal; max-width:none;
-    }
     .brand-logo-fixed{ top:12px; right:14px; }
     .brand-logo-fixed img{ height:34px; }
     .nav-ctrl{ bottom:14px; right:14px; gap:10px; }
@@ -329,6 +318,10 @@
 
     /* title slide */
     .mega-title{ line-height:1.05; }
+    .title-image-mobile{
+      display:block; width:100%; max-width:320px; margin-top:26px;
+      border-radius:14px;
+    }
     .rune-row{ margin-top:18px; }
     .rune-items{ gap:20px; }
     .rune{ font-size:26px; }
@@ -351,9 +344,6 @@
 <body>
 
 <div class="progress" id="progress"></div>
-<div class="brand-fixed">
-  HANDBALL STÄFA - DER FAHRPLAN ZU NEUEN PARTNERN
-</div>
 <div class="brand-logo-fixed" id="brandLogoFixed">
   <img src="logo.png" alt="Handball Stäfa Logo">
 </div>
@@ -383,6 +373,7 @@
       <div class="meta-row">
         <span>Saison 2026/27</span>
       </div>
+      <img src="aufbruch.png" alt="Projekt Aufbruch" class="title-image-mobile">
     </div>
   </section>
 
