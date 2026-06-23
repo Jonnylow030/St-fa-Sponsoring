@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+<title>Sponsorenkonzept — Handball Stäfa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Exo:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+
+  :root{
+    --bg:#0a0a0b;
+    --bg2:#181410;
+    --yellow:#F2C200;
+    --yellow-bright:#FFDB33;
+    --text:#ffffff;
+    --muted:rgba(255,255,255,0.62);
+    --muted2:rgba(255,255,255,0.38);
+    --card:rgba(255,255,255,0.045);
+    --card-hover:rgba(255,255,255,0.07);
+    --line:rgba(242,194,0,0.22);
+    --line-soft:rgba(255,255,255,0.1);
+    --yellow-dim:rgba(242,194,0,0.14);
+  }
+
+  body{
+    font-family:'Exo', sans-serif;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% -10%, rgba(242,194,0,0.10) 0%, transparent 60%),
+      linear-gradient(165deg, var(--bg) 0%, var(--bg2) 100%);
+    color:var(--text);
+    -webkit-font-smoothing:antialiased;
+    overflow:hidden;
+  }
+
+  /* faint grid overlay */
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    background-image:
+      linear-gradient(rgba(242,194,0,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(242,194,0,0.05) 1px, transparent 1px);
+    background-size:46px 46px;
+    pointer-events:none;
+    z-index:0;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 30%, black 0%, transparent 75%);
+  }
+
+  /* ───────── deck / scroll-snap ───────── */
+  .deck{
+    position:relative;
+    height:100vh;
+    overflow-y:scroll;
+    scroll-snap-type:y mandatory;
+    scroll-behavior:smooth;
+    z-index:1;
+  }
+  .slide{
+    height:100vh;
+    width:100%;
+    scroll-snap-align:start;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:48px clamp(24px,6vw,96px);
+    position:relative;
+    overflow-y:auto;
+    scrollbar-width:none;
+  }
+  .slide::-webkit-scrollbar{ display:none; }
+  .slide-inner{ width:100%; max-width:1080px; }
+
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    font-size:11px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+    color:var(--yellow); margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:''; width:22px; height:2px; background:var(--yellow); display:inline-block;
+  }
+
+  h1.title{
+    font-size:clamp(30px,5.2vw,54px);
+    font-weight:800;
+    line-height:1.08;
+    letter-spacing:-0.5px;
+    margin-bottom:18px;
+  }
+  h1.title em{ font-style:normal; color:var(--yellow); }
+
+  .lead{
+    font-size:clamp(15px,1.7vw,18px);
+    font-weight:300;
+    color:var(--muted);
+    line-height:1.6;
+    max-width:680px;
+    margin-bottom:30px;
+  }
+
+  .small-label{
+    font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted2);
+  }
+
+  /* shield bullet marker */
+  .shield{ flex-shrink:0; width:16px; height:18px; margin-top:3px; }
+  .shield path{ fill:none; stroke:var(--yellow); stroke-width:1.6; }
+
+  ul.shield-list{ list-style:none; display:flex; flex-direction:column; gap:14px; }
+  ul.shield-list li{ display:flex; gap:12px; font-size:14.5px; font-weight:300; color:var(--text); line-height:1.5; }
+  ul.shield-list li b{ font-weight:600; color:var(--yellow); }
+
+  .grid-2{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .grid-4{ display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+
+  .panel-label{
+    font-size:12px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--text); margin-bottom:16px; padding-bottom:10px; border-bottom:1px solid var(--line);
+  }
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--line-soft);
+    border-radius:14px;
+    padding:20px 18px;
+    transition:border-color .25s, background .25s;
+  }
+  .card:hover{ background:var(--card-hover); border-color:var(--line); }
+  .card .num{ font-size:11px; font-weight:700; color:var(--yellow); letter-spacing:2px; margin-bottom:10px; }
+  .card h3{ font-size:16px; font-weight:700; margin-bottom:8px; }
+  .card p{ font-size:13px; font-weight:300; color:var(--muted); line-height:1.5; }
+
+  .tag-row{ display:flex; flex-wrap:wrap; gap:10px; margin-top:24px; }
+  .tag{
+    font-size:11.5px; font-weight:500; padding:7px 14px; border-radius:999px;
+    border:1px solid var(--line); color:var(--text); background:var(--yellow-dim);
+  }
+
+  /* ── Title slide ── */
+  .slide-title{ text-align:center; }
+  .slide-title .slide-inner{ display:flex; flex-direction:column; align-items:center; }
+  .brand-mark{ display:flex; align-items:center; gap:12px; margin-bottom:34px; }
+  .brand-mark .shield{ width:30px; height:34px; }
+  .brand-mark .shield path{ stroke-width:1.4; }
+  .brand-mark span{ font-size:12px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--muted); }
+  .mega-title{
+    font-size:clamp(40px,9vw,92px);
+    font-weight:900;
+    letter-spacing:-1px;
+    line-height:1;
+    margin-bottom:10px;
+  }
+  .mega-sub{
+    font-size:clamp(16px,2.6vw,26px);
+    font-weight:600;
+    color:var(--yellow);
+    letter-spacing:.5px;
+    margin-bottom:22px;
+  }
+  .mega-tagline{ font-size:15px; font-weight:300; font-style:italic; color:var(--muted); margin-bottom:50px; }
+  .meta-row{
+    display:flex; flex-wrap:wrap; gap:10px 28px; justify-content:center;
+    font-size:11.5px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--muted2);
+  }
+  .meta-row span::before{ content:'—'; color:var(--yellow); margin-right:8px; }
+  .meta-row span:first-child::before{ content:''; margin-right:0; }
+  .wave{ position:absolute; bottom:0; left:0; width:100%; opacity:.5; }
+
+  /* ── Agenda ── */
+  .agenda-list{ display:flex; flex-direction:column; }
+  .agenda-row{
+    display:flex; align-items:baseline; gap:22px; padding:16px 0;
+    border-bottom:1px solid var(--line-soft);
+    cursor:pointer; transition:padding-left .2s, color .2s;
+  }
+  .agenda-row:hover{ padding-left:10px; }
+  .agenda-row:hover .idx, .agenda-row:hover .txt{ color:var(--yellow); }
+  .agenda-row:first-child{ border-top:1px solid var(--line-soft); }
+  .agenda-row .idx{ font-size:13px; font-weight:700; color:var(--yellow); width:28px; }
+  .agenda-row .txt{ font-size:clamp(16px,2vw,21px); font-weight:500; }
+  .agenda-row .sub{ margin-left:auto; font-size:12px; color:var(--muted2); font-weight:300; }
+
+  /* ── Tier cards ── */
+  .tier-card{
+    background:var(--card); border:1px solid var(--line-soft); border-radius:16px; padding:22px 18px;
+    display:flex; flex-direction:column; gap:10px; position:relative;
+  }
+  .tier-card.featured{ border-color:var(--line); background:var(--yellow-dim); }
+  .tier-card .tier-name{ font-size:18px; font-weight:800; }
+  .tier-card .tier-target{ font-size:12px; color:var(--muted); font-weight:300; }
+  .tier-card .tier-price{ font-size:14px; font-weight:700; color:var(--yellow); margin-top:6px; }
+  .tier-card .tier-benefit{ font-size:12.5px; color:var(--muted); font-weight:300; line-height:1.5; margin-top:auto; padding-top:10px; border-top:1px solid var(--line-soft); }
+
+  /* ── Highlight box (Wegzoll etc) ── */
+  .highlight-box{
+    border:1px solid var(--line); background:var(--yellow-dim); border-radius:16px;
+    padding:24px 26px; margin-top:8px;
+  }
+  .highlight-box .h-label{ font-size:11px; font-weight:800; letter-spacing:2px; text-transform:uppercase; color:var(--yellow); margin-bottom:10px; }
+  .highlight-box p{ font-size:14.5px; font-weight:300; color:var(--text); line-height:1.6; }
+
+  /* ── Pitch table cards ── */
+  .pitch-card{ background:var(--card); border:1px solid var(--line-soft); border-radius:14px; padding:18px; }
+  .pitch-card .grp{ font-size:13px; font-weight:800; color:var(--yellow); text-transform:uppercase; letter-spacing:1px; margin-bottom:10px; }
+  .pitch-card .motive{ font-size:12px; font-weight:600; color:var(--muted); margin-bottom:8px; }
+  .pitch-card .quote{ font-size:14px; font-weight:400; font-style:italic; line-height:1.5; }
+
+  /* ── Roadmap stepper ── */
+  .roadmap{ display:flex; gap:14px; }
+  .road-step{ flex:1; display:flex; flex-direction:column; gap:8px; }
+  .road-step .dot{ width:10px; height:10px; border-radius:50%; background:var(--yellow); margin-bottom:4px; }
+  .road-bar{ height:2px; background:var(--line-soft); position:relative; margin-bottom:18px; }
+  .road-bar::before{ content:''; position:absolute; left:0; top:0; height:2px; width:100%; background:linear-gradient(90deg, var(--yellow), transparent 102%); opacity:.35; }
+  .road-step .phase{ font-size:11px; font-weight:700; letter-spacing:1.5px; color:var(--yellow); }
+  .road-step .time{ font-size:11.5px; font-weight:600; color:var(--muted2); }
+  .road-step .desc{ font-size:12.5px; font-weight:300; color:var(--muted); line-height:1.45; }
+
+  /* ── Closing ── */
+  .cta-row{ display:flex; gap:14px; flex-wrap:wrap; margin-top:34px; }
+  .cta-pill{
+    border:1px solid var(--line); border-radius:999px; padding:11px 20px;
+    font-size:13px; font-weight:600; color:var(--text); background:var(--card);
+  }
+
+  /* ───────── nav chrome ───────── */
+  .progress{
+    position:fixed; top:0; left:0; height:3px; background:var(--yellow);
+    z-index:20; transition:width .25s ease; width:0%;
+  }
+  .nav-ctrl{
+    position:fixed; bottom:26px; right:clamp(20px,5vw,64px); z-index:20;
+    display:flex; align-items:center; gap:16px;
+  }
+  .nav-ctrl button{
+    width:42px; height:42px; border-radius:50%; border:1px solid var(--line);
+    background:rgba(10,10,11,0.7); color:var(--yellow); cursor:pointer;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .2s, transform .15s;
+  }
+  .nav-ctrl button:hover{ background:var(--yellow-dim); }
+  .nav-ctrl button:active{ transform:scale(.92); }
+  .nav-ctrl button svg{ width:16px; height:16px; }
+  .slide-count{ font-size:12px; font-weight:700; letter-spacing:1px; color:var(--muted); min-width:54px; text-align:center; }
+  .slide-count b{ color:var(--yellow); }
+
+  .dot-nav{
+    position:fixed; left:clamp(14px,3vw,40px); top:50%; transform:translateY(-50%);
+    z-index:20; display:flex; flex-direction:column; gap:9px;
+  }
+  .dot-nav button{
+    width:7px; height:7px; border-radius:50%; border:none; background:rgba(255,255,255,0.22);
+    cursor:pointer; padding:0; transition:background .2s, transform .2s;
+  }
+  .dot-nav button.active{ background:var(--yellow); transform:scale(1.5); }
+
+  .brand-fixed{
+    position:fixed; top:24px; left:clamp(20px,5vw,64px); z-index:20;
+    font-size:11px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted2);
+    display:flex; align-items:center; gap:8px;
+  }
+  .brand-fixed .shield{ width:13px; height:15px; }
+  .brand-fixed .shield path{ stroke:var(--muted2); }
+
+  @media (max-width: 760px){
+    .grid-2, .grid-3, .grid-4{ grid-template-columns:1fr; }
+    .grid-2{ gap:26px; }
+    .roadmap{ flex-direction:column; }
+    .road-bar{ display:none; }
+    .dot-nav{ display:none; }
+    .agenda-row .sub{ display:none; }
+    .slide{ padding:88px 22px 28px; align-items:flex-start; }
+    h1.title{ margin-bottom:12px; }
+    .lead{ margin-bottom:20px; }
+    ul.shield-list{ gap:11px; }
+    ul.shield-list li{ font-size:13.5px; }
+    .panel-label{ margin-bottom:11px; padding-bottom:7px; }
+    .agenda-row{ padding:12px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .deck{ scroll-behavior:auto; }
+    *{ transition:none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+<div class="brand-fixed">
+  <svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg>
+  HANDBALL STÄFA — SPONSORING
+</div>
+
+<div class="dot-nav" id="dotNav"></div>
+
+<div class="nav-ctrl">
+  <button id="prevBtn" aria-label="Vorherige Folie">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg>
+  </button>
+  <span class="slide-count"><b id="curIdx">01</b> / <span id="totalIdx">12</span></span>
+  <button id="nextBtn" aria-label="Nächste Folie">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+</div>
+
+<div class="deck" id="deck">
+
+  <!-- 1 — TITLE -->
+  <section class="slide slide-title">
+    <div class="slide-inner">
+      <div class="brand-mark">
+        <svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg>
+        <span>Sponsorenkonzept</span>
+      </div>
+      <h1 class="mega-title">HANDBALL STÄFA</h1>
+      <div class="mega-sub">Die Wikinger vom Zürichsee</div>
+      <div class="meta-row">
+        <span>1. Liga Handball</span>
+        <span>Komplett eigene Jugend</span>
+        <span>Saison 2026/27</span>
+      </div>
+    </div>
+    <svg class="wave" viewBox="0 0 1200 80" preserveAspectRatio="none" style="height:70px;">
+      <path d="M0 40 Q150 0 300 40 T600 40 T900 40 T1200 40" fill="none" stroke="#F2C200" stroke-width="1.5" opacity="0.5"/>
+    </svg>
+  </section>
+
+  <!-- 2 — AGENDA -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">Überblick</div>
+      <h1 class="title">Der Fahrplan zu mehr <em>Partnern.</em></h1>
+      <div class="agenda-list">
+        <div class="agenda-row" data-jump="2"><span class="idx">01</span><span class="txt">Markenkern &amp; Geschichte</span><span class="sub">Warum Sponsoren zuhören</span></div>
+        <div class="agenda-row" data-jump="3"><span class="idx">02</span><span class="txt">Das Sponsoring-Stufenmodell</span><span class="sub">Crew · Steuermann · Jarl · Allianz</span></div>
+        <div class="agenda-row" data-jump="4"><span class="idx">03</span><span class="txt">Bestehende Angebote, neu sortiert</span><span class="sub">Vom Sticker bis zum Trikot</span></div>
+        <div class="agenda-row" data-jump="6"><span class="idx">04</span><span class="txt">Kleinstsponsoren — Klinkenputzen</span><span class="sub">Tempo &amp; Persönlichkeit</span></div>
+        <div class="agenda-row" data-jump="7"><span class="idx">05</span><span class="txt">Mittelgrosse Sponsoren</span><span class="sub">Professionell, aber persönlich</span></div>
+        <div class="agenda-row" data-jump="8"><span class="idx">06</span><span class="txt">Hauptsponsoren</span><span class="sub">Geschichte statt Werbefläche</span></div>
+        <div class="agenda-row" data-jump="9"><span class="idx">07</span><span class="txt">Überregional &amp; Bestandsausbau</span><span class="sub">Reichweite &amp; Beziehungspflege</span></div>
+        <div class="agenda-row" data-jump="10"><span class="idx">08</span><span class="txt">Der Raubzug der Wikinger</span><span class="sub">Das Leuchtturm-Event</span></div>
+        <div class="agenda-row" data-jump="11"><span class="idx">09</span><span class="txt">Pitch-Argumente &amp; Fahrplan</span><span class="sub">Umsetzung ab morgen</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 — MARKENKERN -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">01 — Markenkern</div>
+      <h1 class="title">Die Geschichte ist unser stärkstes <em>Asset.</em></h1>
+      <p class="lead" style="max-width:880px;">Ein kleines Dorf am Zürichsee, kaum überregional bekannt — und trotzdem in der 1. Liga, mit einer ersten Mannschaft komplett aus der eigenen Jugend. Wer das hört, hört nicht „Sponsoring“, sondern eine gute Geschichte.</p>
+      <div class="grid-3">
+        <div class="card">
+          <div class="num">01</div>
+          <h3>Seltene Authentizität</h3>
+          <p>Eigene Jugend statt eingekaufter Söldner — ein echtes Differenzierungsmerkmal.</p>
+        </div>
+        <div class="card">
+          <div class="num">02</div>
+          <h3>Der Underdog-Effekt</h3>
+          <p>Aussenseiter, die sich durchbeissen, lösen automatisch Sympathie aus.</p>
+        </div>
+        <div class="card">
+          <div class="num">03</div>
+          <h3>Nähe statt Distanz</h3>
+          <p>Jeder Sponsor kennt die Spieler persönlich — das kann kein Grossklub bieten.</p>
+        </div>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Zusammenhalt</span>
+        <span class="tag">Bodenständigkeit</span>
+        <span class="tag">Mut</span>
+        <span class="tag">Tradition &amp; Moderne</span>
+        <span class="tag">Ehrlichkeit</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — STUFENMODELL -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">02 — Struktur</div>
+      <h1 class="title">Vier Stufen, <em>eine Crew.</em></h1>
+      <p class="lead" style="max-width:1000px;">Jede Stufe trägt einen Namen aus der Wikinger-Welt — das gibt jedem Sponsor sofort ein Zugehörigkeitsgefühl.</p>
+      <div class="grid-4">
+        <div class="tier-card">
+          <div class="tier-name">Crew-Mitglied</div>
+          <div class="tier-target">Lokales Gewerbe im Dorf</div>
+          <div class="tier-price">CHF 200 – 800</div>
+          <div class="tier-benefit">Sichtbarkeit &amp; Dazugehörigkeit, geringes Risiko</div>
+        </div>
+        <div class="tier-card">
+          <div class="tier-name">Steuermann</div>
+          <div class="tier-target">Regionale KMU</div>
+          <div class="tier-price">CHF 1'000 – 5'000</div>
+          <div class="tier-benefit">Werbewirkung, Mitarbeiter- &amp; Kundenbindung</div>
+        </div>
+        <div class="tier-card featured">
+          <div class="tier-name">Jarl</div>
+          <div class="tier-target">Grössere regionale/nationale Unternehmen</div>
+          <div class="tier-price">CHF 5'000 – 25'000+</div>
+          <div class="tier-benefit">Exklusivität, Markenpräsenz, PR-Wert</div>
+        </div>
+        <div class="tier-card">
+          <div class="tier-name">Allianzpartner</div>
+          <div class="tier-target">Überregionaler, thematischer Fit</div>
+          <div class="tier-price">Individuell</div>
+          <div class="tier-benefit">Reichweite &amp; Content-Kooperation</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4b — ASSET-MAPPING TEIL 1 -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">03 — Sortierung</div>
+      <h1 class="title">Bestehende Angebote, <em>neu sortiert.</em></h1>
+      <p class="lead" style="max-width:880px;">Handball Stäfa hat längst ein eigenes Sponsoring-Angebot. Wir erfinden nichts neu — wir ordnen es ins Stufenmodell ein, damit jeder Sponsor sofort weiss, wo er reinpasst.</p>
+      <div class="grid-2">
+        <div>
+          <div class="panel-label">Crew-Mitglied — CHF 200–800</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Spielersponsor</b> — persönliche Patenschaft, kleinster Einstieg mit grosser Nähe.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Matchball- / Saisonmatchball-Sponsor</b> — einmaliger, sichtbarer Auftritt pro Spiel oder Saison.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Inserat im Clubmagazin „Nordkurve“</b> — günstige Dauerpräsenz bei den Mitgliedern.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Naturalsponsoring</b> — Sachleistung statt Bargeld, ideal für lokales Gewerbe.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Werbung in Spielplan &amp; Matchprogramm</b> — kleine Fläche, hohe Auflage bei Heimspielen.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Passivmitgliedschaft &amp; Spenden</b> — für Privatpersonen ohne Firmenbezug.</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="panel-label">Steuermann — CHF 1'000–5'000</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Bronze- / Silber-Sponsor</b> — gestaffeltes Einstiegspaket mit klarer Sichtbarkeit.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Banden- und Hallenbodenwerbung</b> — Sichtbarkeit bei jedem Heimspiel, 365 Tage präsent.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Trikotsponsor Aktive, Junioren &amp; Juniorinnen</b> — Team-Patenschaft mit Image-Transfer.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Nachwuchs- / Namenssponsor Rookies</b> — CSR-Wirkung über die Nachwuchsförderung.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Eventsponsor Schülerturnier / Herbstcamp</b> — Sichtbarkeit bei einem konkreten Anlass.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Mitgliedschaft Stäfa Business Club</b> — Netzwerk unter lokalen &amp; regionalen Unternehmern.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4c — ASSET-MAPPING TEIL 2 -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">03 — Sortierung</div>
+      <h1 class="title">Die grossen Bühnen <em>im Überblick.</em></h1>
+      <p class="lead" style="max-width:1000px;">Je grösser das Engagement, desto mehr Reichweite, Exklusivität und PR-Wert bietet Handball Stäfa bereits heute.</p>
+      <div class="grid-2">
+        <div>
+          <div class="panel-label">Jarl — CHF 5'000–25'000+</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Gold-Sponsor</b> — Top-Sichtbarkeit über alle Vereinskanäle.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Trikotsponsor QHL-Hauptmannschaft</b> — höchste Reichweite, Exklusivität auf dem wichtigsten Trikot.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Liga-Sponsor</b> — Präsenz über den gesamten Spielbetrieb hinweg.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Titelsponsor Schülerturnier</b> — PR-Wert &amp; Story statt reiner Werbefläche.</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="panel-label">Allianzpartner — individuell, überregional</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Ausrüster</b> — nationaler Material- &amp; Bekleidungspartner.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Medien Partner</b> — Reichweite über Berichterstattung statt Bandenfläche.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Medical Partner</b> — thematischer Fit zwischen Gesundheit &amp; Spitzensport.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Kooperation SG Züri-Obersee</b> — regionsübergreifende Reichweite über zwei Vereine.</span></li>
+          </ul>
+          <div class="highlight-box" style="margin-top:18px; padding:16px 18px;">
+            <p style="font-size:13px;">Die <b style="color:var(--yellow);">Sponsorenvereinigung</b> bündelt den Austausch unter allen bestehenden Partnern — unabhängig von der Stufe.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 — KLEINSTSPONSOREN -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">04 — Klinkenputzen</div>
+      <h1 class="title">Kleinstsponsoren: <em>Tempo vor Perfektion.</em></h1>
+      <div class="grid-2">
+        <div>
+          <div class="panel-label">So gehen wir vor</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Zu zweit auftreten:</b> Spieler im Leibchen + Vorstandsmitglied.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Sofort-Angebot mitbringen</b> — unterschriftsbereit, keine Rückfrageschleifen.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Spontan statt Termin</b> — das Überraschungsmoment hilft.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Sofort sichtbar danken:</b> Sticker &amp; Social-Media-Post am selben Tag.</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="panel-label">Was zieht</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Dorfstolz</b> — „Unser Verein“.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Geringes Risiko</b> — kleiner Betrag, schnelle Entscheidung.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Soziale Anerkennung</b> — der Sticker im Schaufenster.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Persönliche Beziehung</b> — man kennt die Spieler.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 — MITTELSPONSOREN -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">05 — Steuermänner</div>
+      <h1 class="title">Mittelsponsoren: <em>professionell, aber persönlich.</em></h1>
+      <div class="grid-2">
+        <div>
+          <div class="panel-label">Akquise-Strategie</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Termin über den Vorstand</b>, Auftritt mit Sponsoring-Mappe &amp; Mediadaten.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Schnupper-Sponsoring</b> für eine Saison anbieten.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Bestehende Sponsoren</b> als Türöffner nutzen.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Sponsoren-Stammtisch</b> als Akquise-Hebel.</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="panel-label">Was zieht</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Mitarbeiterbindung</b> — Tickets &amp; Teamevent.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Kundenbindung</b> — Hospitality &amp; VIP-Bereich.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Image-Transfer</b> — Bodenständigkeit &amp; Teamgeist.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Unternehmer-Netzwerk</b> — Kontakt zu anderen Sponsoren.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 — HAUPTSPONSOREN -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">06 — Jarls</div>
+      <h1 class="title">Hauptsponsoren: <em>Geschichte verkaufen, nicht Werbefläche.</em></h1>
+      <div class="grid-2">
+        <div>
+          <div class="panel-label">Akquise-Strategie</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Direkter Kontakt zur Geschäftsleitung</b> über persönliche Netzwerke.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Erlebnis vor Vertrag:</b> Entscheider live ins Spiel einladen.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Exklusivität pro Branche</b> &amp; Mehrjahresvertrag.</span></li>
+          </ul>
+        </div>
+        <div>
+          <div class="panel-label">Was zieht</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>PR-Wert</b> — eine ungewöhnliche, medientaugliche Geschichte.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>CSR &amp; Nachwuchsförderung</b> — gutes Employer Branding.</span></li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> <span><b>Mitarbeiter-Erlebnis</b> — exklusiver Wikinger-Tag.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 — ÜBERREGIONAL & BESTAND -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">07 — Reichweite &amp; Pflege</div>
+      <h1 class="title">Über die Region hinaus <em>wachsen.</em></h1>
+      <div class="grid-2">
+        <div>
+          <div class="panel-label">Überregionale Akquise</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> Story statt Werbefläche — PR über das Alleinstellungsmerkmal.</li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> Diaspora-Ansatz: Ehemalige Dorfbewohner als Brücke.</li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> Marken mit Wikinger-/Nordic-Bezug ansprechen.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="panel-label">Bestand ausbauen</div>
+          <ul class="shield-list">
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> Jährliches Reporting macht den Gegenwert sichtbar.</li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> Stufenaufstieg aktiv anbieten, nicht nur Preis erhöhen.</li>
+            <li><svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg> „Sponsor bringt Sponsor“-Prämie.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 — RAUBZUG -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">08 — Leuchtturm-Event</div>
+      <h1 class="title">Der Raubzug <em>der Wikinger.</em></h1>
+      <p class="lead">Ein jährlicher Umzug: Fans, Spieler und Vorstand ziehen in Wikingerkostümen durch die Dörfer bis nach Zürich und sammeln dabei Sponsorengelder ein.</p>
+      <div class="highlight-box">
+        <div class="h-label">Die „Wegzoll“-Mechanik</div>
+        <p>Betriebe entlang der Route werden vorab als Wegzoll-Stationen angefragt und „zahlen Tribut“, damit die Horde weiterzieht. Spielerisch inszeniert — und ein idealer, niedrigschwelliger Einstiegspunkt für neue Kleinst- und Mittelsponsoren.</p>
+      </div>
+      <div class="highlight-box" style="margin-top:18px;">
+        <div class="h-label">Medienarbeit</div>
+        <p>Regionales Fernsehen und Radio werden informiert und eingeladen. Zuständige filmen das gesamte Event für Social Media und den Aftermovie.</p>
+      </div>
+      <div class="tag-row">
+        <span class="tag">Eventsponsoring</span>
+        <span class="tag">Sammelbüchsen</span>
+        <span class="tag">Merchandising</span>
+        <span class="tag">Abschlussfest am See</span>
+        <span class="tag">Regionale Medien (TV &amp; Radio)</span>
+        <span class="tag">Aftermovie für nächstes Jahr</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 — PITCH-ARGUMENTE -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">09 — Auf den Punkt</div>
+      <h1 class="title">Pitch-Argumente <em>im Überblick.</em></h1>
+      <div class="grid-4">
+        <div class="pitch-card">
+          <div class="grp">Kleinst</div>
+          <div class="motive">Dorfstolz, Zugehörigkeit</div>
+          <div class="quote">„Du bist Teil unserer Crew.“</div>
+        </div>
+        <div class="pitch-card">
+          <div class="grp">Mittel</div>
+          <div class="motive">Bindung, Netzwerk</div>
+          <div class="quote">„Wachse mit uns — und mit anderen Unternehmen.“</div>
+        </div>
+        <div class="pitch-card">
+          <div class="grp">Haupt</div>
+          <div class="motive">PR-Wert, Exklusivität</div>
+          <div class="quote">„Verbinde deine Marke mit einer aussergewöhnlichen Geschichte.“</div>
+        </div>
+        <div class="pitch-card">
+          <div class="grp">Überregional</div>
+          <div class="motive">Reichweite, Content</div>
+          <div class="quote">„Eine Underdog-Geschichte, die landesweit funktioniert.“</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 — FAHRPLAN -->
+  <section class="slide">
+    <div class="slide-inner">
+      <div class="eyebrow">Umsetzung</div>
+      <h1 class="title">Der Fahrplan <em>ab morgen.</em></h1>
+      <div class="road-bar"></div>
+      <div class="roadmap">
+        <div class="road-step"><div class="dot"></div><div class="phase">Phase 1</div><div class="time">Monat 1–2</div><div class="desc">Materialien, Pakete &amp; Zielliste erstellen</div></div>
+        <div class="road-step"><div class="dot"></div><div class="phase">Phase 2</div><div class="time">Monat 2–4</div><div class="desc">Klinkenputzen &amp; erste Mittelsponsoren</div></div>
+        <div class="road-step"><div class="dot"></div><div class="phase">Phase 3</div><div class="time">Monat 3–5</div><div class="desc">Hauptsponsoren-Gespräche &amp; Erlebnisbesuche</div></div>
+        <div class="road-step"><div class="dot"></div><div class="phase">Phase 4</div><div class="time">Monat 4–6</div><div class="desc">Raubzug planen: Route, Bewilligungen, Medien</div></div>
+        <div class="road-step"><div class="dot"></div><div class="phase">Phase 5</div><div class="time">laufend</div><div class="desc">Bestandspflege &amp; „Sponsor bringt Sponsor“</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 — CLOSING -->
+  <section class="slide slide-title">
+    <div class="slide-inner">
+      <div class="brand-mark">
+        <svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg>
+        <span>Gemeinsam stark</span>
+      </div>
+      <h1 class="mega-title" style="font-size:clamp(32px,6vw,56px);">Gemeinsam mehr <em style="color:var(--yellow); font-style:normal;">erobern.</em></h1>
+      <p class="mega-tagline">Jede Stufe zählt — vom Schaufenster-Sticker bis zum Trikot-Sponsor.</p>
+      <div class="cta-row">
+        <span class="cta-pill">Sponsoring-Team Handball Stäfa</span>
+        <span class="cta-pill">Die Wikinger vom Zürichsee</span>
+      </div>
+    </div>
+    <svg class="wave" viewBox="0 0 1200 80" preserveAspectRatio="none" style="height:70px;">
+      <path d="M0 40 Q150 0 300 40 T600 40 T900 40 T1200 40" fill="none" stroke="#F2C200" stroke-width="1.5" opacity="0.5"/>
+    </svg>
+  </section>
+
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  const progress = document.getElementById('progress');
+  const curIdx = document.getElementById('curIdx');
+  const totalIdx = document.getElementById('totalIdx');
+  const dotNav = document.getElementById('dotNav');
+  totalIdx.textContent = String(total).padStart(2,'0');
+
+  slides.forEach((_, i) => {
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', 'Folie ' + (i+1));
+    b.addEventListener('click', () => goTo(i));
+    dotNav.appendChild(b);
+  });
+  const dots = Array.from(dotNav.children);
+
+  let current = 0;
+  function setActive(i){
+    current = Math.max(0, Math.min(total - 1, i));
+    curIdx.textContent = String(current + 1).padStart(2,'0');
+    progress.style.width = (current / (total - 1) * 100) + '%';
+    dots.forEach((d, j) => d.classList.toggle('active', j === current));
+  }
+  function goTo(i){
+    slides[Math.max(0, Math.min(total - 1, i))].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  let scrollTimeout;
+  deck.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      const idx = Math.round(deck.scrollTop / window.innerHeight);
+      setActive(idx);
+    }, 60);
+  });
+
+  document.getElementById('prevBtn').addEventListener('click', () => goTo(current - 1));
+  document.getElementById('nextBtn').addEventListener('click', () => goTo(current + 1));
+
+  document.querySelectorAll('.agenda-row[data-jump]').forEach(row => {
+    row.addEventListener('click', () => goTo(parseInt(row.dataset.jump, 10)));
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (['ArrowDown','ArrowRight','PageDown',' '].includes(e.key)) { e.preventDefault(); goTo(current + 1); }
+    if (['ArrowUp','ArrowLeft','PageUp'].includes(e.key)) { e.preventDefault(); goTo(current - 1); }
+  });
+
+  setActive(0);
+</script>
+</body>
+</html>
