@@ -153,7 +153,7 @@
   .club-logo{ height:64px; width:auto; }
   .brand-mark .shield{ width:30px; height:34px; }
   .brand-mark .shield path{ stroke-width:1.4; }
-  .brand-mark span{ font-size:12px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--muted); }
+  .brand-mark span{ font-size:16px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--muted); }
   .mega-title{
     font-size:clamp(40px,9vw,92px);
     font-weight:900;
@@ -175,9 +175,29 @@
   }
   .meta-row span::before{ content:'—'; color:var(--yellow); margin-right:8px; }
   .meta-row span:first-child::before{ content:''; margin-right:0; }
+  .rune-row{ margin-top:24px; }
+  .rune-caption{ font-size:11px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted2); margin-bottom:14px; }
+  .rune-items{ display:flex; gap:36px; flex-wrap:wrap; }
+  .rune-item{ display:flex; align-items:center; gap:14px; }
+  .rune{
+    font-size:clamp(30px,4vw,42px); font-weight:700; color:var(--yellow);
+    text-shadow: 0 0 10px rgba(242,194,0,.85), 0 0 24px rgba(242,194,0,.5);
+    line-height:1;
+  }
+  .rune-meaning{ font-size:13px; font-weight:300; color:var(--muted); line-height:1.4; }
+  .rune-meaning b{ color:var(--yellow); font-weight:800; }
   .wave{ position:absolute; bottom:0; left:0; width:100%; opacity:.5; }
 
   /* ── Agenda ── */
+  .agenda-layout{ display:flex; align-items:center; gap:40px; }
+  .agenda-main{ flex:1; min-width:0; }
+  .agenda-image{ display:none; }
+  @media (min-width: 761px){
+    .agenda-image{
+      display:block; width:340px; max-width:36%; height:auto;
+      max-height:80vh; flex-shrink:0; border-radius:16px; object-fit:contain;
+    }
+  }
   .agenda-list{ display:flex; flex-direction:column; }
   .agenda-row{
     display:flex; align-items:baseline; gap:22px; padding:16px 0;
@@ -271,6 +291,12 @@
   }
   .brand-fixed .shield{ width:13px; height:15px; }
   .brand-fixed .shield path{ stroke:var(--muted2); }
+  .brand-logo-fixed{
+    position:fixed; top:20px; right:clamp(18px,4vw,52px); z-index:20;
+    transition:opacity .25s;
+  }
+  .brand-logo-fixed img{ height:52px; width:auto; display:block; }
+  .brand-logo-fixed.hidden{ opacity:0; visibility:hidden; }
 
   @media (max-width: 760px){
     .grid-2, .grid-3, .grid-4{ grid-template-columns:1fr; }
@@ -298,8 +324,10 @@
 
 <div class="progress" id="progress"></div>
 <div class="brand-fixed">
-  <svg class="shield" viewBox="0 0 24 26"><path d="M12 2 L21 6 L21 14 C21 20.5 12 24 12 24 C12 24 3 20.5 3 14 L3 6 Z"/></svg>
-  HANDBALL STÄFA — SPONSORING
+  HANDBALL STÄFA - DER FAHRPLAN ZU NEUEN PARTNERN
+</div>
+<div class="brand-logo-fixed" id="brandLogoFixed">
+  <img src="logo.png" alt="Handball Stäfa Logo">
 </div>
 
 <div class="dot-nav" id="dotNav"></div>
@@ -325,8 +353,6 @@
       <h1 class="mega-title">PROJEKT <em style="color:var(--yellow); font-style:normal;">AUFBRUCH</em></h1>
       <div class="mega-sub">Die Wikinger vom Zürichsee</div>
       <div class="meta-row">
-        <span>1. Liga Handball</span>
-        <span>Komplett eigene Jugend</span>
         <span>Saison 2026/27</span>
       </div>
     </div>
@@ -335,18 +361,23 @@
   <!-- 2 — AGENDA -->
   <section class="slide">
     <div class="slide-inner">
-      <div class="eyebrow">Überblick</div>
-      <h1 class="title">Der Fahrplan zu mehr <em>Partnern.</em></h1>
-      <div class="agenda-list">
-        <div class="agenda-row" data-jump="2"><span class="idx">01</span><span class="txt">Markenkern &amp; Geschichte</span><span class="sub">Warum Sponsoren zuhören</span></div>
-        <div class="agenda-row" data-jump="3"><span class="idx">02</span><span class="txt">Das Sponsoring-Stufenmodell</span><span class="sub">Crew · Steuermann · Jarl · Allianz</span></div>
-        <div class="agenda-row" data-jump="4"><span class="idx">03</span><span class="txt">Bestehende Angebote, neu sortiert</span><span class="sub">Vom Sticker bis zum Trikot</span></div>
-        <div class="agenda-row" data-jump="6"><span class="idx">04</span><span class="txt">Kleinstsponsoren — Klinkenputzen</span><span class="sub">Tempo &amp; Persönlichkeit</span></div>
-        <div class="agenda-row" data-jump="7"><span class="idx">05</span><span class="txt">Mittelgrosse Sponsoren</span><span class="sub">Professionell, aber persönlich</span></div>
-        <div class="agenda-row" data-jump="8"><span class="idx">06</span><span class="txt">Hauptsponsoren</span><span class="sub">Geschichte statt Werbefläche</span></div>
-        <div class="agenda-row" data-jump="9"><span class="idx">07</span><span class="txt">Überregional &amp; Bestandsausbau</span><span class="sub">Reichweite &amp; Beziehungspflege</span></div>
-        <div class="agenda-row" data-jump="10"><span class="idx">08</span><span class="txt">Der Raubzug der Wikinger</span><span class="sub">Das Leuchtturm-Event</span></div>
-        <div class="agenda-row" data-jump="11"><span class="idx">09</span><span class="txt">Pitch-Argumente &amp; Fahrplan</span><span class="sub">Umsetzung ab morgen</span></div>
+      <div class="agenda-layout">
+        <div class="agenda-main">
+          <div class="eyebrow">Überblick</div>
+          <h1 class="title" style="font-size:clamp(24px,3.6vw,42px); white-space:nowrap;">Der Fahrplan zu neuen <em>Ufern.</em></h1>
+          <div class="agenda-list">
+            <div class="agenda-row" data-jump="2"><span class="idx">01</span><span class="txt">Markenkern &amp; Geschichte</span><span class="sub">Warum Sponsoren zuhören</span></div>
+            <div class="agenda-row" data-jump="3"><span class="idx">02</span><span class="txt">Das Sponsoring-Stufenmodell</span><span class="sub">Crew · Steuermann · Jarl · Allianz</span></div>
+            <div class="agenda-row" data-jump="4"><span class="idx">03</span><span class="txt">Bestehende Angebote, neu sortiert</span><span class="sub">Vom Sticker bis zum Trikot</span></div>
+            <div class="agenda-row" data-jump="6"><span class="idx">04</span><span class="txt">Kleinstsponsoren — Klinkenputzen</span><span class="sub">Tempo &amp; Persönlichkeit</span></div>
+            <div class="agenda-row" data-jump="7"><span class="idx">05</span><span class="txt">Mittelgrosse Sponsoren</span><span class="sub">Professionell, aber persönlich</span></div>
+            <div class="agenda-row" data-jump="8"><span class="idx">06</span><span class="txt">Hauptsponsoren</span><span class="sub">Geschichte statt Werbefläche</span></div>
+            <div class="agenda-row" data-jump="9"><span class="idx">07</span><span class="txt">Überregional &amp; Bestandsausbau</span><span class="sub">Reichweite &amp; Beziehungspflege</span></div>
+            <div class="agenda-row" data-jump="10"><span class="idx">08</span><span class="txt">Der Raubzug der Wikinger</span><span class="sub">Das Leuchtturm-Event</span></div>
+            <div class="agenda-row" data-jump="11"><span class="idx">09</span><span class="txt">Pitch-Argumente &amp; Fahrplan</span><span class="sub">Umsetzung ab morgen</span></div>
+          </div>
+        </div>
+        <img src="viking.png" alt="Wikinger" class="agenda-image">
       </div>
     </div>
   </section>
@@ -380,6 +411,19 @@
         <span class="tag">Mut</span>
         <span class="tag">Tradition &amp; Moderne</span>
         <span class="tag">Ehrlichkeit</span>
+      </div>
+      <div class="rune-row">
+        <div class="rune-caption">H · S — die Initialen von Handball Stäfa, in Runen geschrieben</div>
+        <div class="rune-items">
+          <div class="rune-item">
+            <span class="rune">ᚺ</span>
+            <span class="rune-meaning"><b>H</b> — Hagalaz: Wandel, Chaos, Naturgewalt</span>
+          </div>
+          <div class="rune-item">
+            <span class="rune">ᛊ</span>
+            <span class="rune-meaning"><b>S</b> — Sowilo: Sonne, Erfolg, Energie</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -692,6 +736,7 @@
   const curIdx = document.getElementById('curIdx');
   const totalIdx = document.getElementById('totalIdx');
   const dotNav = document.getElementById('dotNav');
+  const brandLogoFixed = document.getElementById('brandLogoFixed');
   totalIdx.textContent = String(total).padStart(2,'0');
 
   slides.forEach((_, i) => {
@@ -708,6 +753,7 @@
     curIdx.textContent = String(current + 1).padStart(2,'0');
     progress.style.width = (current / (total - 1) * 100) + '%';
     dots.forEach((d, j) => d.classList.toggle('active', j === current));
+    brandLogoFixed.classList.toggle('hidden', current === 0);
   }
   function goTo(i){
     slides[Math.max(0, Math.min(total - 1, i))].scrollIntoView({ behavior: 'smooth' });
